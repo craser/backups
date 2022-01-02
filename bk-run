@@ -7,6 +7,8 @@ bin=`dirname $0`
 
 title "BACKING UP TO $backup_drive"
 
+create_lock # creates a lock file OR exits, to prevent running concurrently
+
 log "backup drive: $backup_drive"
 log "log file    : $backup_log"
 
@@ -15,6 +17,8 @@ bk-mount "$backup_drive"
 backup_files
 
 bk-unmount "$backup_drive"
+
+delete_lock # remove the lock file
 
 log "done"
 

@@ -2,6 +2,8 @@
 
 . "$HOME/.bk-conf"
 
+lock_file="$HOME/.bk-lock"
+
 function title {
     log "################################################################################"
     log "$1"
@@ -28,6 +30,23 @@ function get_dst_dir {
 
 function get_src_dir {
     echo "$backup_dir"
+}
+
+function create_lock {
+    log "creating lock file: $lock_file"
+    if [ -f "$lock_file" ]; then
+        log "EXISTING LOCK FILE FOUND: $lock_file"
+        log "EXITING"
+        exit 20
+    else
+        log "creating lock file: $lock_file"
+        touch "$lock_file"
+    fi
+}
+
+function delete_lock {
+    log "deleting lock file: $lock_file"
+    rm -f "$lock_file"
 }
 
 function backup_files {
