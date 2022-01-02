@@ -8,13 +8,9 @@ bin=`dirname $0`
 log "backup drive: $backup_drive"
 log "log file    : $backup_log"
 
-
-log "TODO: mount USB drive"
-$bin/bk-mount "$backup_drive"
-if [ $? -ne 0 ]; then
-    echo "Failed to mount $backup_drive."
-    exit 10
-fi
+bk-mount "$backup_drive"
 
 log "TODO: update backup"
-log "unmount USB drive"
+
+bk-unmount "$backup_drive"
+

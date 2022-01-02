@@ -30,7 +30,6 @@ function bk-mount {
             volume_id=`get_volume_id "$volume_name"`
             log "mounting: $volume_id"
             diskutil mount "$volume_id" | sed "s/^/    /"
-            exit $?
             ;;
         *)
             log "NOT mounting any drives"
@@ -44,8 +43,6 @@ function bk-unmount {
     volume_name="$1"
     log "unmounting $1"
     volume_id=`get_volume_id "$volume_name"`
-    log "mounting: $volume_id"
     diskutil unmount "$volume_id" | sed "s/^/    /"
-    exit $?
 }
 
