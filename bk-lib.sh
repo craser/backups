@@ -22,6 +22,25 @@ function get_volume_id {
     echo $volume_id
 }
 
+function get_dst_dir {
+    echo "/Volumes/${backup_drive}/`hostname`/`echo $backup_dir | sed 's/^\///'`"
+}
+
+function get_src_dir {
+    echo "$backup_dir"
+}
+
+function backup_files {
+    src_dir=`get_src_dir`
+    dst_dir=`get_dst_dir`
+    log "src: $src_dir"
+    log "dst: $dst_dir"
+    mkdir -p "$dst_dir" | sed "s/^/    /" >> "$backup_log"
+    log "starting rsync"
+    rsync -av --delete "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
+    log "rsync complete: exit $?"
+}
+
 function bk-mount {
     volume_name="$1"
     log "(re)mounting $1"

@@ -12,7 +12,7 @@ log "log file    : $backup_log"
 
 bk-mount "$backup_drive"
 
-log "TODO: update backup"
+backup_files
 
 bk-unmount "$backup_drive"
 
