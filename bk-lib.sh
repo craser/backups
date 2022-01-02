@@ -2,8 +2,14 @@
 
 . "$HOME/.bk-conf"
 
+function title {
+    log "################################################################################"
+    log "$1"
+    log "################################################################################"
+}    
+
 function log {
-    echo "[$(date "+%Y.%m.%d-%H.%M.%S")] $*"
+    echo "[$(date "+%Y.%m.%d-%H.%M.%S")] $*" | tee -a "$backup_log"
 }
     
 function count_volumes {
@@ -29,7 +35,7 @@ function bk-mount {
         1)
             volume_id=`get_volume_id "$volume_name"`
             log "mounting: $volume_id"
-            diskutil mount "$volume_id" | sed "s/^/    /"
+            diskutil mount "$volume_id" | sed "s/^/    /" >> "$backup_log"
             ;;
         *)
             log "NOT mounting any drives"
@@ -43,6 +49,6 @@ function bk-unmount {
     volume_name="$1"
     log "unmounting $1"
     volume_id=`get_volume_id "$volume_name"`
-    diskutil unmount "$volume_id" | sed "s/^/    /"
+    diskutil unmount "$volume_id" | sed "s/^/    /" >> "$backup_log"
 }
 

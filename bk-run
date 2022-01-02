@@ -5,6 +5,8 @@ bin=`dirname $0`
 . "$HOME/.bk-conf"
 . "$bin/bk-lib.sh"
 
+title "BACKING UP TO $backup_drive"
+
 log "backup drive: $backup_drive"
 log "log file    : $backup_log"
 
@@ -13,4 +15,6 @@ bk-mount "$backup_drive"
 log "TODO: update backup"
 
 bk-unmount "$backup_drive"
+
+log "done"
 
