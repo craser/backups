@@ -1,0 +1,8 @@
+#!/bin/bash
+
+bin=`dirname $0`
+
+
+echo "TODO: mount USB drive"
+echo "TODO: update backup"
+echo "unmount USB drive"
