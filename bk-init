@@ -2,12 +2,12 @@
 
 read -p "backup volume name          : " backup_drive
 read -p "directory to back up [$HOME]: " backup_dir
+conf="$HOME/.bk-conf"
 
 if [ -z "$backup_dir" ]; then
     backup_dir="$HOME"
 fi
 
-conf="$HOME/.bk-conf.test"
 echo "# Configuration file for automated backups." >> $conf
 echo "" >> $conf
 echo "backup_drive=\"$backup_drive\"" >> $conf

@@ -2,10 +2,20 @@
 
 
 bin=`dirname $0`
-. "$HOME/.bk-conf"
+conf="$HOME/.bk-conf"
+
+. "$conf"
 . "$bin/bk-lib.sh"
 
 title "BACKING UP TO $backup_drive"
+
+init_log
+
+if [ ! -f "$conf" ]; then
+    log "Configuration file not found: $conf"
+    log "run bk-init to create this file"
+    exit 10
+fi
 
 create_lock # creates a lock file OR exits, to prevent running concurrently
 

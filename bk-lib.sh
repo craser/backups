@@ -3,6 +3,8 @@
 . "$HOME/.bk-conf"
 
 lock_file="$HOME/.bk-lock"
+max_log_size_megabytes=5
+max_log_age_days=30
 
 function title {
     log "################################################################################"
@@ -10,8 +12,43 @@ function title {
     log "################################################################################"
 }    
 
+function tstamp {
+    date "+%Y.%m.%d-%H.%M.%S"
+}
+
+function get_log_size {
+    log_megabytes=`du -m ~/.bk.log | sed 's/^\([0-9]*\).*/\1/'`
+    echo log_megabytes
+}
+
+function delete_old_logs {
+    log "deleting old log files"
+    for log_file in `find . -maxdepth 1 -name ".bk.log*" -ctime +${max_log_age_days}d 2>/dev/null`; do
+        log "DELETING old log file: $log_file"
+        rm -f "$log_file"
+    done
+    log "done deleting old log files"
+}
+
+function rotate_logs {
+    log "rotating logs"
+    log_megabytes=`get_log_size`
+    if [ $log_megabytes -gt $max_log_size_megabytes ]; then
+        new_log="$backup_log.`tstamp`"
+        log "renaming $backup_log to $new_log"
+        mv "$backup_log" "$new_log"
+        touch "$backup_log"
+    fi
+    log "done rotating logs"
+}
+
+function init_log {
+    rotate_logs
+    delete_old_logs
+}
+
 function log {
-    echo "[$(date "+%Y.%m.%d-%H.%M.%S")] $*" | tee -a "$backup_log"
+    echo "[`tstamp`] $*" | tee -a "$backup_log"
 }
     
 function count_volumes {
@@ -56,7 +93,7 @@ function backup_files {
     log "dst: $dst_dir"
     mkdir -p "$dst_dir" | sed "s/^/    /" >> "$backup_log"
     log "starting rsync"
-    rsync -av --delete "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
+    rsync -av --delete --ignore-errors "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
     log "rsync complete: exit $?"
 }
 
