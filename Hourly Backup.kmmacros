@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>662678756.23263597</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1158</integer>
+						<key>MacroActionType</key>
+						<string>Notification</string>
+						<key>SoundName</key>
+						<string></string>
+						<key>Subtitle</key>
+						<string>See log in ~/.kb.log</string>
+						<key>Text</key>
+						<string></string>
+						<key>Title</key>
+						<string>Hourly Backup Started</string>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1156</integer>
+						<key>MacroActionType</key>
+						<string>DisplayProgress</string>
+						<key>Progress</key>
+						<string>50</string>
+						<key>Title</key>
+						<string>Hourly Backup Started</string>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1157</integer>
+						<key>MacroActionType</key>
+						<string>DisplayProgress</string>
+						<key>Progress</key>
+						<string>100</string>
+						<key>Title</key>
+						<string>Hourly Backup Complete</string>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1159</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteShellScript</string>
+						<key>Path</key>
+						<string>~/bin/backups/bk-run</string>
+						<key>Source</key>
+						<string>Nothing</string>
+						<key>Text</key>
+						<string></string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1160</integer>
+						<key>MacroActionType</key>
+						<string>Notification</string>
+						<key>SoundName</key>
+						<string></string>
+						<key>Subtitle</key>
+						<string>See log in ~/.kb.log</string>
+						<key>Text</key>
+						<string></string>
+						<key>Title</key>
+						<string>Hourly Backup Complete</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>662678766.18968201</real>
+				<key>ModificationDate</key>
+				<real>662930871.85192394</real>
+				<key>Name</key>
+				<string>Hourly Backup</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>ExecuteType</key>
+						<string>While</string>
+						<key>MacroTriggerType</key>
+						<string>Time</string>
+						<key>Repeat</key>
+						<true/>
+						<key>RepeatTime</key>
+						<integer>3600</integer>
+						<key>TimeFinishHour</key>
+						<integer>23</integer>
+						<key>TimeFinishMinutes</key>
+						<integer>59</integer>
+						<key>TimeHour</key>
+						<integer>0</integer>
+						<key>TimeMinutes</key>
+						<integer>0</integer>
+						<key>WhichDays</key>
+						<integer>127</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>B511EFF2-E6BA-4167-8706-164B60265BD6</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>Scheduled Macros</string>
+		<key>ToggleMacroUID</key>
+		<string>6BB131BF-0B95-4E88-82B6-0FEFA4D3C666</string>
+		<key>UID</key>
+		<string>C88F63CB-4274-4F23-86BC-CCCA32C1287F</string>
+	</dict>
+</array>
+</plist>
