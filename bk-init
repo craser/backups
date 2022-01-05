@@ -1,5 +1,8 @@
 #!/bin/bash
 
+bin=`dirname $0`
+. "$bin/bk-lib.sh"
+
 read -p "backup volume name          : " backup_drive
 read -p "directory to back up [$HOME]: " backup_dir
 conf="$HOME/.bk-conf"
@@ -8,13 +11,15 @@ if [ -z "$backup_dir" ]; then
     backup_dir="$HOME"
 fi
 
-echo "# Configuration file for automated backups." >> $conf
-echo "" >> $conf
-echo "backup_drive=\"$backup_drive\"" >> $conf
-echo "backup_dir=\"$HOME\"" >> $conf
-echo "backup_log=\"$HOME/.bk.log\"" >> $conf
+log "# Configuration file for automated backups." >> $conf
+log "" >> $conf
+log "backup_drive=\"$backup_drive\"" >> $conf
+log "backup_dir=\"$HOME\"" >> $conf
+log "backup_log=\"$HOME/.bk.log\"" >> $conf
 
-echo "config file created: $HOME/.bk-conf"
-echo "contents:"
+log "config file created: $HOME/.bk-conf"
+log "contents:"
 cat "$conf" | sed "s/^/    /"
 
+log "checking auto-mount status of $backup_drive"
+$bin/bk-statecheck
