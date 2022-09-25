@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+bin=`dirname $0`
+conf="$HOME/.bk-conf"
+
+. "$conf"
+. "$bin/bk-lib.sh"
+
+log_size_megabytes=`get_log_size`
+echo "log size: $log_size_megabytes"

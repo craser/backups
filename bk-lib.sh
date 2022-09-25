@@ -18,7 +18,7 @@ function tstamp {
 
 function get_log_size {
     log_megabytes=`du -m ~/.bk.log | sed 's/^\([0-9]*\).*/\1/'`
-    echo log_megabytes
+    echo "$log_megabytes"
 }
 
 function delete_old_logs {
@@ -33,11 +33,14 @@ function delete_old_logs {
 function rotate_logs {
     log "rotating logs"
     log_megabytes=`get_log_size`
-    if [ $log_megabytes -gt $max_log_size_megabytes ]; then
+    log "current log size is $log_megabytes"
+    if [ "$log_megabytes" -gt "$max_log_size_megabytes" ]; then
         new_log="$backup_log.`tstamp`"
         log "renaming $backup_log to $new_log"
         mv "$backup_log" "$new_log"
         touch "$backup_log"
+    else
+        log "$log_megabytes is under $max_log_size_megabytes limit."
     fi
     log "done rotating logs"
 }
@@ -93,7 +96,10 @@ function backup_files {
     log "dst: $dst_dir"
     mkdir -p "$dst_dir" | sed "s/^/    /" >> "$backup_log"
     log "starting rsync"
-    rsync -av --delete --ignore-errors "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
+    #rsync -av --delete --ignore-errors "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
+    log "WARNING: NOT DELETING MISSING/REMOVED FILES. REINSTATE THIS ASAP! (01/05/2022)"
+    log "WARNING: DISABLED VERBOSE RSYNC LOGGING"
+    rsync -a --ignore-errors "$src_dir" "$dst_dir" 2>&1 >> "$backup_log"
     log "rsync complete: exit $?"
 }
 
@@ -124,6 +130,7 @@ function bk-unmount {
     volume_name="$1"
     log "unmounting $1"
     volume_id=`get_volume_id "$volume_name"`
+    log "volume id for $volume_name: $volume_id"
     diskutil unmount "$volume_id" | sed "s/^/    /" >> "$backup_log"
 }
 

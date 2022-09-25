@@ -1,0 +1,34 @@
+#!/bin/bash
+
+bin=`dirname $0`
+conf="$HOME/.bk-conf"
+
+. "$conf"
+. "$bin/bk-lib.sh"
+
+bk-mount "$backup_drive"
+uuid=`diskutil info "/Volumes/$backup_drive" | grep "UUID" | sed 's/.* \([^ ]*\)$/\1/'`
+bk-unmount "$backup_drive"
+
+fstab_line=`cat /etc/fstab | grep "$uuid" | grep "noauto"`
+
+log "name : $backup_drive"
+log "UUID : $uuid"
+log "fstab: $fstab_line"
+
+if [ -z "$fstab_line" ]; then
+    log "Configure your mac so that it doesn't auto-mount this drive."
+    log "bk-run will mount & unmount this drive automatically to keep backups safe."
+    log "Add the following to your /etc/fstab file (USE 'sudo vifs'):"
+    log ""
+    log "UUID=${uuid} none hfs rw,noauto"
+    log ""
+    log "exiting"
+    exit 10
+else 
+    log "Looks good. Found this configuration line in /etc/fstab:"
+    log "    $fstab_line"
+    log "exiting"
+    exit 0
+fi
+
